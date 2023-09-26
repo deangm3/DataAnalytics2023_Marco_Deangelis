@@ -1,0 +1,194 @@
+---
+title: "Data Analytics Lab 1"
+author: "Marco Deangelis"
+date: "2023-09-15"
+output: html_document
+---
+
+```{r}
+library("readxl")
+EPI_data <- read_excel("C:/Users/marco/Downloads/2010EPI_data.xls", sheet = "EPI2010_onlyEPIcountries")
+attach(EPI_data)
+tf <- is.na(EPI)
+EPI_non_na <- EPI[!tf]
+EPI_non_na
+
+```
+
+
+```{r}
+summary(EPI)
+```
+```{r}
+stem(EPI)
+```
+
+```{r}
+hist(EPI)
+```
+
+```{r}
+hist(EPI, seq(30.,95.,1.0), prob = TRUE)
+lines(density(EPI, na.rm = TRUE, bw = "SJ"))
+rug(EPI)
+```
+```{r}
+plot(ecdf(EPI), do.points = FALSE, verticals = TRUE)
+```
+```{r}
+par(pty="s")
+qqnorm(EPI); qqline(EPI)
+```
+```{r}
+x <- seq(30, 95, 1)
+qqplot(qt(ppoints(250), df = 5), x, xlab = 'Q-Q plot for t dsn')
+qqline(x)
+```
+
+```{r}
+MTI_pt <- as.numeric(MTI_pt, na.rm = TRUE)
+tf <- is.na(MTI_pt)
+MTI_pt_non_na <- MTI_pt[!tf]
+MTI_pt_non_na <- as.numeric(MTI_pt_non_na)
+MTI_pt_non_na
+```
+```{r}
+WSI_pt <- as.numeric(WSI_pt, na.rm = TRUE)
+tf <- is.na(WSI_pt)
+WSI_pt_non_na <- WSI_pt[!tf]
+WSI_pt_non_na <- as.numeric(WSI_pt_non_na, na.rm = TRUE)
+format(WSI_pt_non_na, scientific = FALSE)
+
+```
+
+```{r}
+
+hist(MTI_pt, seq(0.,100.,1.0), prob = TRUE)
+lines(density(MTI_pt, na.rm = TRUE, bw = "SJ"))
+rug(MTI_pt)
+```
+
+```{r}
+hist(WSI_pt, seq(0.,100.,1.0), prob = TRUE)
+lines(density(WSI_pt, na.rm = TRUE, bw = "SJ"))
+rug(WSI_pt)
+```
+```{r}
+plot(ecdf(WSI_pt), do.points = FALSE, verticals = TRUE)
+```
+```{r}
+plot(ecdf(MTI_pt), do.points = FALSE, verticals = TRUE)
+```
+```{r}
+qqplot(qt(ppoints(250), df = 5), WSI_pt, xlab = 'Q-Q plot for t dsn')
+qqline(x)
+```
+```{r}
+qqplot(qt(ppoints(250), df = 5), MTI_pt, xlab = 'Q-Q plot for t dsn')
+qqline(x)
+```
+
+```{r}
+qqplot(WSI_pt, MTI_pt, xlab = 'Q-Q plot for t dsn')
+qqline(x)
+
+```
+
+
+```{r}
+boxplot(MTI_pt,WSI_pt)
+```
+
+```{r}
+EPILand <- EPI[!Landlock]
+ELand <- EPILand[!is.na(EPILand)]
+hist(ELand, seq(30., 95., 1.0), prob = TRUE)
+help(hist)
+```
+
+
+```{r}
+NoSW <- EPI[!No_surface_water]
+NoSWnoNA <- NoSW[!is.na(NoSW)]
+hist(NoSWnoNA, seq(30., 95., 1.0), prob = TRUE)
+
+Deserts <- EPI[!Desert]
+DesertsnoNA <- Deserts[!is.na(Deserts)]
+hist(DesertsnoNA, seq(30., 95., 1.0), prob = TRUE)
+
+H_P_D <- EPI[!High_Population_Density]
+H_P_DnoNA <- H_P_D[!is.na(H_P_D)]
+hist(H_P_DnoNA, seq(30., 95., 1.0), prob = TRUE)
+
+
+
+
+```
+
+
+```{r}
+hist(ELand, seq(0.,100.,1.0), prob = TRUE)
+lines(density(ELand, na.rm = TRUE, bw = "SJ"))
+rug(ELand)
+
+hist(NoSWnoNA, seq(0.,100.,1.0), prob = TRUE)
+lines(density(NoSWnoNA, na.rm = TRUE, bw = "SJ"))
+rug(NoSWnoNA)
+
+hist(DesertsnoNA, seq(0.,100.,1.0), prob = TRUE)
+lines(density(DesertsnoNA, na.rm = TRUE, bw = "SJ"))
+rug(DesertsnoNA)
+
+hist(H_P_DnoNA, seq(0.,100.,1.0), prob = TRUE)
+lines(density(H_P_DnoNA, na.rm = TRUE, bw = "SJ"))
+rug(H_P_DnoNA)
+```
+
+```{r}
+plot(ecdf(ELand), do.points = FALSE, verticals = TRUE)
+plot(ecdf(NoSWnoNA), do.points = FALSE, verticals = TRUE)
+plot(ecdf(DesertsnoNA), do.points = FALSE, verticals = TRUE)
+plot(ecdf(H_P_DnoNA), do.points = FALSE, verticals = TRUE)
+```
+
+
+```{r}
+qqplot(qt(ppoints(250), df = 5), ELand, xlab = 'Q-Q plot for ELand')
+qqline(x)
+```
+
+```{r}
+qqplot(qt(ppoints(250), df = 5), NoSWnoNA, xlab = 'Q-Q plot for No_surface_water')
+qqline(x)
+
+qqplot(qt(ppoints(250), df = 5), DesertsnoNA, xlab = 'Q-Q plot for Desert')
+qqline(x)
+
+qqplot(qt(ppoints(250), df = 5), H_P_DnoNA, xlab = 'Q-Q plot for High_Population_Density')
+qqline(x)
+```
+
+```{r}
+qqplot(NoSWnoNA, DesertsnoNA, xlab = 'Q-Q plot for SW and Desert')
+qqline(x)
+
+qqplot(H_P_DnoNA, DesertsnoNA, xlab = 'Q-Q plot for HPD and Desert')
+qqline(x)
+
+qqplot(NoSWnoNA, H_P_DnoNA, xlab = 'Q-Q plot for SW and HPD')
+qqline(x)
+
+
+
+```
+
+
+```{r}
+#solving the example
+EPI_South_Asia <- EPI[EPI_regions == "South Asia"]
+EPI_South_Asia #returns EPI values for countries in South Asia
+```
+```{r}
+
+```
+
